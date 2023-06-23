@@ -83,19 +83,7 @@ class BotInterface():
                             self.users = self.api.search_users(self.params, self.offset)
                     self.message_send(event.user_id, f'Поиск закончен')    
                         
-                    #users = self.api.search_users(self.params)
-                    #user = users.pop()
-                    #здесь логика для проверки бд
-                    #photos_user = self.api.get_photos(user['id'])                  
-                    #
-                    #attachment = ''
-                    #for photo in photos_user:
-                        #attachment += f'photo{photo["owner_id"]}_{photo["id"]},'
                     
-                    #self.message_send(event.user_id,
-                                      #f'Встречайте {user["name"]} ссылка: vk.com/id{user["id"]} ',
-                                      #attachment=attachment
-                                      #) 
                    
                    
                 elif command == 'пока':
