@@ -63,7 +63,7 @@ class BotInterface():
                         if vkcity_count > 0:
                             city_key=True
                             vkcity_i=vkcity.get('items')
-                            print (vkcity_i[0]['id'])
+                         
                             self.params['city']= vkcity_i[0]['id']
                             break
                         else:
