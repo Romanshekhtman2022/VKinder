@@ -18,6 +18,8 @@ class BotInterface():
         self.params={}
         self.offset=0
         self.interface_a = vk_api.VkApi(token=acces_token)
+        self.count_search = 0
+        
        
 
 
@@ -115,21 +117,45 @@ class BotInterface():
                     
                     
                 elif command == 'поиск':
-                    self.message_send(event.user_id, f'Начинаем поиск')
-                    self.users = self.api.search_users(self.params, self.offset)
+                    if self.params:
+                        self.message_send(event.user_id, f'Начинаем поиск')
+                    else:
+                        self.params = self.api.get_profile_info(event.user_id)
+                        self.message_send(event.user_id, 
+                                      f'Здравствуй {self.params["name"]}\n'
+                                      f"Вас приветствует бот VKinder!\n" 
+                                      f"Я найду для Вас пару\n"                                                      
+                                      f"Критерии: город пользователя, возраст в промежутке от -5 лет до +5 лет"
+                                      f" от Вашего пользователя.\n"
+                                      f"Чтобы начать поиск введите команду 'начать поиск'.\n"
+                                      f"Для окончания работы с ботом введите команду 'пока'"
+                                      )
+                        self.check_params(self.params, event.user_id, longpoll)
+
+                    
+                    if self.count_search == 0:
+                        self.users = self.api.search_users(self.params, self.offset)
+                        self.count_search = 1
+                       
+                        
                     keysend = False
                     while keysend == False:
+                        print ('**********')
                         if self.users:
+                            
                             user = self.users.pop()
+                            
                             #здесь логика для проверки бд
                             res = check_user(event.user_id, user['id'])
                             
                             if res == False:
+                                self.offset += 50
                                 self.result_send (self.params, event.user_id, user)
                                 keysend = True
                         else:
-                            self.offset += 10
+                            self.offset =+ 60 
                             self.users = self.api.search_users(self.params, self.offset)
+                            
                     self.message_send(event.user_id, f'Поиск закончен')    
                         
                     
