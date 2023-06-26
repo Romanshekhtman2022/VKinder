@@ -149,7 +149,7 @@ class BotInterface():
                             res = check_user(event.user_id, user['id'])
                             
                             if res == False:
-                                self.offset += 50
+                                
                                 self.result_send (self.params, event.user_id, user)
                                 keysend = True
                         else:
