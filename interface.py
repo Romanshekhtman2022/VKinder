@@ -140,7 +140,7 @@ class BotInterface():
                         
                     keysend = False
                     while keysend == False:
-                        print ('**********')
+                        
                         if self.users:
                             
                             user = self.users.pop()
